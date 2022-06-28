@@ -5,22 +5,19 @@ import NewEvent from './NewEventModal';
 import { useState } from 'react';
 import { Badge, Calendar } from 'antd';
 
-const events = [{
-  year: 2022,
-  month: 5,
-  date: 8,
-  name: 'Mega Event',
-  startTime: moment.now(),
-  endTime: moment.now(),
-  description: 'Bla bla bla'
-}
-];
+const events = [];
 
 const getListData = (value) => {
-  let listData;
+  const filteredEvents = events
+    .filter(event => event.year == value.year() 
+                && event.month == value.month() 
+                && event.date == value.date());
 
-  const filteredEvents = events.filter(event => event.year == value.year() && event.month == value.month() && event.date == value.date());
-  listData = filteredEvents.map(event => { return { type: 'success', content: event.name } });
+  const listData = filteredEvents.map(event => {
+    return {
+      type: 'success', content: event.name
+    }
+  });
 
   return listData || [];
 };
@@ -38,9 +35,9 @@ const App = () => {
     setIsModalVisible(false);
 
     const event = {
-      year: selectedDate.year,
-      month: selectedDate.month,
-      date: selectedDate.date,
+      year: selectedDate.year(),
+      month: selectedDate.month(),
+      date: selectedDate.date(),
       name: values.name,
       startTime: values.startTime,
       endTime: values.endTime,
@@ -57,11 +54,7 @@ const App = () => {
   };
 
   const handleDateSelection = (value) => {
-    selectedDate = {
-      year: value.year(),
-      month: value.month(),
-      date: value.date()
-    }
+    selectedDate = value;
 
     showModal();
   }
