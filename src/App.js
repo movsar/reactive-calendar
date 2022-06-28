@@ -1,9 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
 import 'antd/dist/antd.css';
-import { Layout, Form, DatePicker, Checkbox, Button, Input } from 'antd';
+import { Layout, Form, DatePicker, Button, Input } from 'antd';
 import moment from 'moment';
 
+const { TextArea } = Input;
 const { RangePicker } = DatePicker;
 const { Header, Footer, Sider, Content } = Layout;
 
@@ -38,7 +39,7 @@ function App() {
 
             <Form.Item
               label="Event Name"
-              name="eventName"
+              name="name"
               rules={[
                 {
                   required: true,
@@ -50,28 +51,60 @@ function App() {
             </Form.Item>
 
             <Form.Item
-              label="Event Date"
-              name="eventDate"
+              label="Date"
+              name="date"
+
+            >
+              <DatePicker style={{ width: '100%' }} />
+            </Form.Item>
+
+            <Form.Item
+              label="Start Time"
+              name="startTime"
               rules={[
                 {
                   required: true,
-                  message: 'Please input the date!',
+                  message: 'Please select the start time!',
                 },
               ]}
             >
-              <DatePicker inputReadOnly />
-              
-              <RangePicker
+
+              <DatePicker
                 picker='time'
-                showTime={{
-                  defaultValue: [moment(Date.now(), 'HH:mm'), moment(Date.now(), 'HH:mm')],
-                }}
                 format="HH:mm"
+                placeholder='Start time'
+                style={{ width: '50%' }}
+                defaultValue={moment()}
               />
 
             </Form.Item>
 
+            <Form.Item
+              label="End Time"
+              name="endTime"
+              rules={[
+                {
+                  required: true,
+                  message: 'Please select the start time!',
+                },
+              ]}
+            >
+              <DatePicker
+                picker='time'
+                format="HH:mm"
+                placeholder='End time'
+                style={{ width: '50%' }}
+                defaultValue={moment().add(1, 'hour')}
+              />
 
+            </Form.Item>
+
+            <Form.Item
+              label="Description"
+              name="description"
+            >
+              <TextArea rows={4} placeholder="A few words about the event (optional)" maxLength={6} />
+            </Form.Item>
 
             <Form.Item
               wrapperCol={{
@@ -79,9 +112,16 @@ function App() {
                 span: 16,
               }}
             >
-              <Button type="primary" htmlType="submit">
-                Submit
-              </Button>
+              <div
+                style={{ float: 'right' }}>
+                <Button>
+                  Cancel
+                </Button>
+
+                <Button type="primary" htmlType="submit" style={{ marginLeft: '10px' }}>
+                  Submit
+                </Button>
+              </div>
             </Form.Item>
           </Form>
         </Content>
