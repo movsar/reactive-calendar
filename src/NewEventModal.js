@@ -12,7 +12,10 @@ const NewEvent = (props) => {
         title="New Event"
         visible={props.isModalVisible}
         footer=''
-        width='650px'>
+        width='650px'
+        onOk={props.onFinish}
+        onCancel={props.handleCancel}
+      >
 
         <div style={{ marginTop: '40px' }}>
 
@@ -100,7 +103,7 @@ const NewEvent = (props) => {
               label="Description"
               name="description"
             >
-              <TextArea rows={4} placeholder="A few words about the event (optional)" maxLength={6} />
+              <TextArea allowClear  rows={4} placeholder="A few words about the event (optional)" maxLength={6} />
             </Form.Item>
 
             <Form.Item
