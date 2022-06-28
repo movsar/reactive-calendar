@@ -1,4 +1,3 @@
-import './App.css';
 import 'antd/dist/antd.css';
 import moment from 'moment';
 import NewEvent from './NewEventModal';
@@ -7,11 +6,15 @@ import { Badge, Calendar } from 'antd';
 
 const events = [];
 
+let selectedDate = {};
+
+// Retrieves and maps data for every day in the selected month
 const getListData = (value) => {
+
   const filteredEvents = events
-    .filter(event => event.year == value.year() 
-                && event.month == value.month() 
-                && event.date == value.date());
+    .filter(event => event.year == value.year()
+      && event.month == value.month()
+      && event.date == value.date());
 
   const listData = filteredEvents.map(event => {
     return {
@@ -21,8 +24,6 @@ const getListData = (value) => {
 
   return listData || [];
 };
-
-let selectedDate = {};
 
 const App = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -45,21 +46,18 @@ const App = () => {
     }
 
     events.push(event);
-    console.log(this.events);
   };
 
   const handleCancel = (values) => {
     setIsModalVisible(false);
-    console.log('Success:', values);
   };
 
   const handleDateSelection = (value) => {
     selectedDate = value;
-
     showModal();
   }
 
-  const showModal = (v) => {
+  const showModal = () => {
     setIsModalVisible(true);
   };
 
@@ -68,7 +66,7 @@ const App = () => {
     return (
       <ul className="events">
         {listData.map((item) => (
-          <li key={item.content}>
+          <li key={item.content} style={{ listStyle: 'none' }}>
             <Badge status={item.type} text={item.content} />
           </li>
         ))}

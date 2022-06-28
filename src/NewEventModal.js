@@ -1,8 +1,6 @@
-import './App.css';
 import 'antd/dist/antd.css';
 import { Form, DatePicker, TimePicker, Button, Input, Modal } from 'antd';
 import moment from 'moment';
-import { useState } from 'react';
 const { TextArea } = Input;
 
 const NewEvent = (props) => {
@@ -63,12 +61,6 @@ const NewEvent = (props) => {
               <Form.Item
                 label="Start Time"
                 name="startTime"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select the start time!',
-                  },
-                ]}
               >
 
                 <TimePicker
@@ -84,12 +76,6 @@ const NewEvent = (props) => {
               <Form.Item
                 label="End Time"
                 name="endTime"
-                rules={[
-                  {
-                    required: true,
-                    message: 'Please select the start time!',
-                  },
-                ]}
               >
                 <TimePicker
                   picker='time'
