@@ -1,0 +1,43 @@
+.month {
+    font-weight: bold;
+}
+
+.calendar {
+    width: 1000px;
+    background-color:rgb(131, 241, 180);
+    font-size: 20px;
+}
+
+.weekdays {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    border-bottom: 5px solid black;    
+}
+
+.weekdays div {
+    width: calc(1000px/7);
+    text-align: center;
+}
+
+.days {
+    margin-top: 60px;
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.days div {
+    width: calc(1000px/7);
+    height: 120px;
+    text-align: center;
+}
+
+.days :hover {
+    cursor: pointer;
+    background-color: aquamarine;
+}
+
+.prev-date, .next-date {
+    opacity: 30%;
+}
