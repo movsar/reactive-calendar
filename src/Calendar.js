@@ -5,7 +5,6 @@ import moment from 'moment';
 import NewEvent from './NewEventModal';
 import { useState, useRef, useEffect } from 'react';
 import { Badge } from 'antd';
-import { click } from '@testing-library/user-event/dist/click';
 const { TextArea } = Input;
 const events = [];
 
@@ -66,7 +65,6 @@ let prevDaysCount;
 
 const getPreviousMonthDays = () => {
   prevDaysCount = moment().startOf('month').subtract(1, 'day').day() + 1;
-  console.log('month', moment().month())
   let prevDays = [];
 
   for (let i = 1; i <= prevDaysCount; i++) {
@@ -87,24 +85,27 @@ const getNextMonthDays = () => {
 }
 
 const Day = ({ date, renderer, clickHandler, className = '' }) => {
-  const now = moment(`2022-5-${date}`);
-  const clickHandlerWrapper = () => clickHandler(now);
+  const clickHandlerWrapper = () => clickHandler(date);
 
   return <div className={className} onClick={clickHandlerWrapper}>
-    {date}{renderer(now)}
+    {date.date()}{renderer(date)}
   </div>;
 }
 
 const Days = ({ renderer, clickHandler }) => {
-  const days = [];
-  for (let i = 1; i <= moment().daysInMonth(); i++) {
-    days.push(i);
-  }
+  const sharedProps = {clickHandler:clickHandler, renderer:renderer};
+  const now = moment();
+
   return (
     <div className="days">
-      {getPreviousMonthDays().map(day => <Day date={day} clickHandler={clickHandler} renderer={renderer} className='prev-date' />)}
-      {days.map(day => <Day date={day} clickHandler={clickHandler} renderer={renderer} />)}
-      {getNextMonthDays().map(day => <Day date={day} clickHandler={clickHandler} renderer={renderer} className='next-date' />)}
+      {getPreviousMonthDays()
+        .map(day => <Day date={moment([now.year(), now.clone().subtract(1, 'month').month(), day])} className='prev-date' {...sharedProps} />)}
+      
+      {Array.from({length: moment().daysInMonth()}, (_, i) => i + 1)
+        .map(day => <Day date={moment([now.year(), now.month(), day])} {...sharedProps} />)}
+      
+      {getNextMonthDays()
+        .map(day => <Day date={moment([now.year(), now.clone().add(1, 'month').month(), day])} className='next-date'  {...sharedProps} />)}
     </div>
   );
 }
@@ -148,7 +149,6 @@ const Calendar = (props) => {
   };
 
   const dateCellRender = (value) => {
-    console.log(value.toString());
     const listData = getListData(value);
     return (
       <ul className="events">
