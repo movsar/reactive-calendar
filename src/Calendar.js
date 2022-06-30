@@ -52,7 +52,6 @@ const MonthSelector = () => {
 }
 
 const Weekdays = () => {
-
   const weekdays = moment.weekdays().map(weekday => <div>{weekday}</div>);
   return (
     <div class="weekdays">
@@ -74,14 +73,8 @@ const getPreviousMonthDays = () => {
 }
 
 const getNextMonthDays = () => {
-  const totalDaysCount = 42;
-  const nextDaysCount = totalDaysCount - prevDaysCount - moment().daysInMonth();
-
-  let nextDays = [];
-  for (let i = 1; i <= nextDaysCount; i++) {
-    nextDays.push(moment().endOf('month').add(i, 'day').date());
-  }
-  return nextDays;
+  const nextDaysCount = 42 - prevDaysCount - moment().daysInMonth();
+  return Array.from({length: nextDaysCount}, (_, i) => i + 1);
 }
 
 const Day = ({ date, renderer, clickHandler, className = '' }) => {
