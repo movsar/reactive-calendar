@@ -4,7 +4,7 @@
 
 .calendar {
     width: 1000px;
-    background-color:rgb(131, 241, 180);
+    background-color: rgb(131, 241, 180);
     font-size: 20px;
 }
 
@@ -12,7 +12,7 @@
     display: flex;
     align-items: center;
     font-weight: bold;
-    border-bottom: 5px solid black;    
+    border-bottom: 5px solid black;
 }
 
 .weekdays div {
@@ -33,11 +33,21 @@
     text-align: center;
 }
 
+.events {
+    display: flex;
+    flex-wrap: wrap;
+    text-align: left;
+    overflow: hidden;
+    padding-left: 0px;
+    white-space: nowrap;
+}
+
 .days :hover {
     cursor: pointer;
     background-color: aquamarine;
 }
 
-.prev-date, .next-date {
+.prev-date,
+.next-date {
     opacity: 30%;
 }

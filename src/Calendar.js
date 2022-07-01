@@ -80,7 +80,7 @@ const getNextMonthDays = () => {
 const Day = ({ date, renderer, clickHandler, className = '' }) => {
   const clickHandlerWrapper = () => clickHandler(date);
 
-  return <div className={className} onClick={clickHandlerWrapper}>
+  return <div className={`day ${className}`} onClick={clickHandlerWrapper}>
     {date.date()}{renderer(date)}
   </div>;
 }
