@@ -5,13 +5,14 @@ import moment from 'moment';
 import NewEvent from './NewEventModal';
 import { useState, useRef, useEffect } from 'react';
 import { Badge } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 const { TextArea } = Input;
 const events = [];
 
 let selectedDate = {};
 
 // Retrieves and maps data for every day in the selected month
-const getListData = (value) => {
+const getListData = (value, events) => {
 
   const filteredEvents = events
     .filter(event => event.year == value.year()
@@ -106,6 +107,9 @@ const Days = ({ renderer, clickHandler }) => {
 const Calendar = (props) => {
   useTraceUpdate(props);
 
+  const dispatch = useDispatch();
+  const events = useSelector(state => state.events);
+  
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const onFinishFailed = (errorInfo) => {
@@ -125,7 +129,7 @@ const Calendar = (props) => {
       description: values.description
     }
 
-    events.push(event);
+    dispatch({type: "addEvent", payload: event})
   };
 
   const handleCancel = (values) => {
@@ -142,7 +146,7 @@ const Calendar = (props) => {
   };
 
   const dateCellRender = (value) => {
-    const listData = getListData(value);
+    const listData = getListData(value, events);
     return (
       <ul className="events">
         {listData.map((item) => (
